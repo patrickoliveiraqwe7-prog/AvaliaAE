@@ -18,17 +18,24 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install dependencies (optional)
+      - name: Prepare public directory
         run: |
-          if [ -f package.json ]; then npm ci || true; fi
+          # create a minimal public dir containing only static assets
+          rm -rf public || true
+          mkdir public
+          # copy main static files
+          cp -R index.html public/ 2>/dev/null || true
+          cp -R styles.css public/ 2>/dev/null || true
+          cp -R script.js public/ 2>/dev/null || true
+          cp -R admin.html public/ 2>/dev/null || true
+          cp -R admin.js public/ 2>/dev/null || true
+          if [ -d assets ]; then cp -R assets public/; fi
+          # copy other useful static files if present
+          cp -R README.md public/ 2>/dev/null || true
 
-      - name: Build (if present)
-        run: |
-          if npm run | grep -q " build"; then npm run build || true; fi
-
-      - name: Deploy to gh-pages
+      - name: Deploy to gh-pages (public dir)
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
+          publish_dir: ./public
           publish_branch: gh-pages
