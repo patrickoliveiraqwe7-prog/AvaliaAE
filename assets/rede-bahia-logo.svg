@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="280" height="60" viewBox="0 0 280 60" aria-labelledby="title desc" role="img">
+  <title id="title">Rede Bahia</title>
+  <desc id="desc">Logo Rede Bahia: marca gráfica azul e texto Rede Bahia</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1">
+      <stop offset="0%" stop-color="#0B66C8"/>
+      <stop offset="100%" stop-color="#004a9f"/>
+    </linearGradient>
+  </defs>
+  <!-- graphic mark: striped circle -->
+  <g transform="translate(4,4)">
+    <circle cx="24" cy="24" r="24" fill="url(#g1)" />
+    <g fill="#fff" opacity="0.9">
+      <rect x="10" y="8" width="28" height="4" rx="2"/>
+      <rect x="8" y="18" width="32" height="4" rx="2"/>
+      <rect x="12" y="28" width="28" height="4" rx="2"/>
+    </g>
+  </g>
+  <!-- text -->
+  <g transform="translate(64,36)">
+    <text x="0" y="-4" font-family="Inter, Roboto, Arial, sans-serif" font-weight="700" font-size="18" fill="#052f66">Rede Bahia</text>
+  </g>
+</svg>

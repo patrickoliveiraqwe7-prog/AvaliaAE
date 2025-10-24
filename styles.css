@@ -1,0 +1,895 @@
+.minhas-avaliacoes-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.minha-avaliacao-item {
+    border-bottom: 1px solid #eee;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+}
+.mini-nota {
+    font-weight: 700;
+    color: #0b5ed7;
+}
+.mini-comentario {
+    margin-top: 6px;
+    color: #333;
+}
+.btn-admin-login {
+    background: linear-gradient(180deg,#007bff,#0056d6);
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.btn-admin-login:active { transform: translateY(1px); }
+.btn-admin-login[disabled], .btn-admin-login.btn-disabled { opacity: 0.6; cursor: default; }
+
+/* Login menu in header */
+.login-menu { background:#fff;border:1px solid rgba(0,0,0,0.06);box-shadow:0 8px 20px rgba(0,0,0,0.08);border-radius:8px;padding:8px;min-width:160px }
+.login-menu-wrapper{ position:relative; display:inline-block }
+.login-menu { position:absolute; right:0; top:calc(100% + 8px); display:none }
+.login-menu-item { display:block;width:100%;text-align:left;padding:8px 10px;border:none;background:transparent;cursor:pointer;border-radius:6px }
+.login-menu-item:hover { background:#f0f6ff }
+
+/* Responsive: on small screens make the login menu span the available width under the header/button */
+@media (max-width: 900px) {
+    .login-menu { left:8px; right:8px; min-width:unset; top:calc(100% + 10px); }
+}
+
+/* Back button style - modern, rounded with icon support */
+.btn-back {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background: linear-gradient(180deg,#ffffff,#eef6ff);
+    border: 1px solid rgba(3,86,170,0.12);
+    color: #003a70;
+    padding: 8px 14px;
+    border-radius: 28px;
+    font-weight:700;
+    box-shadow: 0 6px 18px rgba(3,58,107,0.06);
+    transition: transform .14s ease, box-shadow .14s ease, background .12s ease;
+}
+.btn-back:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(3,58,107,0.10); background: linear-gradient(180deg,#f7fbff,#e9f4ff); }
+.btn-back:active { transform: translateY(0); }
+.btn-back .ico { display:inline-flex; width:18px; height:18px; align-items:center; justify-content:center; color:#005baa }
+.btn-back.small { padding:6px 10px; font-size:0.95em; border-radius:20px }
+
+/* Optional fixed variant for back buttons (use class btn-back-fixed) */
+.btn-back-fixed { position: fixed; left: 24px; top: 24px; z-index: 1000 }
+
+/* Ensure core sections remain in normal document flow */
+section { position: relative; z-index: 0 }
+
+/* Uniform login action button (pill with icon) */
+.login-action {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:10px 16px;
+    border-radius:28px;
+    background: linear-gradient(180deg,#ffffff,#edf6ff);
+    border:1px solid rgba(3,86,170,0.14);
+    color:#003a70;
+    font-weight:800;
+    box-shadow: 0 8px 22px rgba(3,58,107,0.06);
+    cursor:pointer;
+    transition: transform .14s ease, box-shadow .14s ease, background .12s ease;
+}
+.login-action .ico { width:20px; height:20px; display:inline-flex; align-items:center; justify-content:center; color:#005baa }
+.login-action:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(3,58,107,0.10); background: linear-gradient(180deg,#f7fbff,#e9f4ff); }
+.login-action:active { transform: translateY(0); }
+.login-action[disabled] { opacity:0.6; cursor:default; transform:none; box-shadow:none }
+
+.department-info {
+    background: linear-gradient(180deg,#f0f7ff,#e6f3ff);
+    border-left: 4px solid #005baa;
+    padding: 12px 14px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,91,170,0.06);
+}
+.department-name {
+    font-weight: 700;
+    color: #003a70;
+    margin-bottom: 6px;
+}
+.department-focus {
+    font-size: 14px;
+    color: #054a91;
+    margin-bottom: 6px;
+}
+.department-note {
+    font-size: 12px;
+    color: #44627a;
+}
+.dashboard-card {
+    background: linear-gradient(180deg,#ffffff,#f4fbff);
+    border-radius: 10px;
+    padding: 12px;
+    box-shadow: 0 6px 18px rgba(3,64,120,0.06);
+    border: 1px solid rgba(0,86,170,0.06);
+}
+.comentario-card, .minha-avaliacao-item {
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+.comentario-card:hover, .minha-avaliacao-item:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(3,64,120,0.06); }
+.grafico-canvas { border-radius: 8px; overflow: hidden; min-height: 220px; height: 320px; max-height: 420px; width: 100%; display: block; }
+
+/* Gráfico baseado em DOM (substitui canvas) */
+.grafico-dom-chart {
+    width: 100%;
+    min-height: 220px;
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    padding: 14px;
+    box-sizing: border-box;
+}
+.grafico-dom-column {
+    flex: 0 0 auto;
+    width: 72px; /* base - ajusta conforme necessário */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.grafico-dom-bar {
+    width: 100%;
+    background: linear-gradient(180deg,#0077cc,#005baa);
+    border-radius: 10px 10px 6px 6px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    transition: height 400ms cubic-bezier(.2,.9,.2,1), transform 180ms ease;
+    box-shadow: 0 6px 14px rgba(0,86,170,0.08);
+    cursor: pointer;
+}
+.grafico-dom-label {
+    margin-top:8px;
+    font-weight:600;
+    color:#033a6b;
+    text-align:center;
+    font-size:0.92em;
+}
+.grafico-dom-tooltip {
+    position: absolute;
+    background: rgba(3,58,107,0.95);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    pointer-events: none;
+    transform: translate(-50%, -120%);
+    white-space: nowrap;
+    z-index: 4000;
+    display: none;
+}
+
+@media (max-width:720px) {
+    .grafico-dom-column { width: 48px; }
+}
+.rating-badge { background: linear-gradient(180deg,#007bff,#0056d6); color: #fff; padding: 4px 8px; border-radius: 6px; }
+/* tooltip custom para gráfico */
+.chart-tooltip {
+    background: rgba(3,58,107,0.95);
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    box-shadow: 0 6px 18px rgba(3,58,107,0.28);
+    z-index: 3000;
+    pointer-events: none;
+}
+
+/* Painel de detalhe do estagiário no dashboard */
+#painelDetalheEstagiario { padding: 12px; background: linear-gradient(180deg,#ffffff,#f7fbff); border-radius:10px; border:1px solid rgba(0,86,170,0.05); }
+#detalheEstagiario p { margin: 4px 0; }
+#graficoDetalheEstagiario.grafico-canvas { width: 320px; height: 160px; }
+
+.dashboard-metrics { margin-bottom: 6px; }
+.metric-card {
+    background: linear-gradient(180deg,#ffffff,#f7fbff);
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 6px 16px rgba(0,86,170,0.06);
+    border: 1px solid rgba(0,86,170,0.06);
+    min-width: 120px;
+    font-weight: 700;
+    color: #003a70;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.metric-value { color: #005baa; margin-left:8px; font-size:16px; }
+
+/* animação simples para barras: usado por script para desenhar com easing */
+.bar-anim { transition: height 600ms cubic-bezier(.2,.9,.2,1), transform 200ms ease; }
+
+@media (max-width: 720px) {
+    .metric-card { min-width: 48%; flex: 1 1 48%; }
+    #graficoDashboardGestor { width: 100% !important; }
+    #graficoDetalheEstagiario.grafico-canvas { width: 100% !important; height: 140px !important; }
+}
+select {
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #005baa;
+    font-size: 1em;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #f4f8fb;
+    color: #222;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 4px rgba(0,91,170,0.07);
+    transition: border 0.2s;
+}
+select:focus {
+    border: 2px solid #0077cc;
+    outline: none;
+}
+:root{
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --primary-600: #005baa;
+    --primary-500: #0077cc;
+    --accent: #eaf6ff;
+    --muted: #6b7a8c;
+    --radius: 12px;
+    --shadow-1: 0 6px 18px rgba(3,58,107,0.06);
+}
+body {
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
+    background: linear-gradient(180deg, #f6f9fc 0%, var(--bg) 100%);
+    margin: 0;
+    padding: 0;
+    color: #1f2b3a;
+    -webkit-font-smoothing:antialiased;
+}
+
+.header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    background: #005baa;
+    border-radius: 0 0 32px 32px;
+    min-height: 80px;
+    position: relative;
+}
+.header-left {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+.header-right {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.btn-admin-login {
+    position: static;
+    margin: 0;
+    top: auto;
+    right: auto;
+    left: auto;
+}
+
+header {
+    background: linear-gradient(90deg, rgba(0,91,170,0.95), rgba(0,119,204,0.95));
+    color: #fff;
+    text-align: center;
+    padding: 26px 12px 18px 12px;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.logo {
+    width: auto;
+    max-height: 56px;
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+h1 {
+    margin: 0 0 8px 0;
+    font-size: 2.2em;
+}
+
+main {
+    max-width: 720px;
+    margin: 22px auto;
+    background: transparent;
+    padding: 12px;
+}
+
+.page-card {
+    background: var(--card);
+    border-radius: 14px;
+    box-shadow: var(--shadow-1);
+    padding: 20px;
+}
+
+section {
+    margin-bottom: 32px;
+}
+
+h2 {
+    color: var(--primary-600);
+    margin-top: 0;
+    font-size: 1.4rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+input, textarea, select {
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Inter', 'Roboto', Arial, sans-serif;
+    transition: box-shadow 140ms ease, border-color 140ms ease;
+    background: #fff;
+}
+input:focus, textarea:focus, select:focus {
+    box-shadow: 0 6px 18px rgba(3,91,170,0.06);
+    border-color: var(--primary-500);
+    outline: none;
+}
+
+button[type="submit"] {
+    background: linear-gradient(90deg, var(--primary-600) 0%, var(--primary-500) 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 6px 18px rgba(3,58,107,0.08);
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform 160ms cubic-bezier(.2,.9,.2,1), box-shadow 160ms ease;
+    letter-spacing: 0.3px;
+}
+button[type="submit"]:hover{ transform: translateY(-3px); box-shadow: 0 10px 26px rgba(3,58,107,0.12); }
+/* Primary/Secondary utility classes for buttons */
+.primary { background: linear-gradient(90deg, #005baa 0%, #0077cc 100%); color: #fff; }
+.btn-secondary { background: linear-gradient(180deg,#f2f8ff,#e9f4ff); color:#003a70; border:1px solid rgba(3,86,170,0.08); }
+
+/* Ensure default form buttons (without specific classes) follow the card button sizing on mobile */
+@media (max-width:600px) {
+    button, .btn-admin-login, .login-action { box-shadow: none !important; }
+    .login-card form button:not(.primary):not(.btn-secondary) { background: linear-gradient(180deg,#f2f8ff,#e9f4ff); color:#003a70; border:1px solid rgba(3,86,170,0.08); }
+}
+button[type="submit"] .fa-spinner {
+    margin-left: 8px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+.estagiario-card, .comentario-card {
+    background: linear-gradient(180deg,var(--card), #f7fbff);
+    border-radius: 12px;
+    box-shadow: var(--shadow-1);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    font-size: 1em;
+    transition: transform .12s ease, box-shadow .12s ease;
+}
+.comentarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(260px,1fr));
+    gap: 16px;
+    align-items: start;
+}
+.comentario-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,91,170,0.12); }
+.comentario-header { display:flex; align-items:center; gap:12px; margin-bottom:8px; }
+.comentario-avatar { width:44px; height:44px; border-radius:50%; background:#005baa; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.comentario-meta { flex:1; }
+.comentario-meta strong { display:block; color:#033a6b; }
+.comentario-meta .departamento { color:#0077cc; font-size:0.9em; }
+.rating-badge { min-width:44px; height:44px; border-radius:10px; background:linear-gradient(180deg,#005baa,#0077cc); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1em; box-shadow:0 3px 8px rgba(0,91,170,0.12); }
+.comentario-body { color:#123; line-height:1.4; margin-top:6px; font-size:0.96em; }
+.comentario-actions { margin-top:10px; display:flex; gap:8px; }
+.comentario-actions button { background:transparent; border:1px solid #e0eefc; color:#005baa; padding:6px 10px; border-radius:8px; cursor:pointer; }
+.comentario-empty { padding:24px; text-align:center; color:#666; background:#fff; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.04); }
+.comentario-card.removing { opacity: 0; transform: translateY(-12px) scale(0.98); transition: opacity .28s ease, transform .28s ease; }
+
+/* Modal de confirmação */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(3,12,30,0.48);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .18s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* Page card wrapper for the main content */
+.main-wrapper { display:block; max-width:720px; margin: 18px auto; padding:12px; }
+.page-card .login-cards { gap:14px }
+.modal-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 18px;
+    width: 96%;
+    max-width: 420px;
+    box-shadow: 0 18px 50px rgba(3,58,107,0.28);
+    transform: translateY(8px);
+    transition: transform .18s ease;
+}
+.modal-overlay.active .modal-card { transform: translateY(0); }
+.modal-title { font-weight:700; color:#033a6b; margin:0 0 8px 0; font-size:1.05em; }
+.modal-text { color:#334; margin-bottom:12px; font-size:0.98em; }
+.modal-actions { display:flex; gap:10px; justify-content:flex-end; }
+.modal-actions .modal-btn { padding:8px 12px; border-radius:10px; border:none; cursor:pointer; font-weight:700; }
+.modal-actions .modal-btn.cancel { background:#f3f6fb; color:#035; border:1px solid #e1eefc; }
+.modal-actions .modal-btn.confirm { background:linear-gradient(90deg,#e94e77,#f9a602); color:#fff; }
+.instrucoes-uso {
+    font-size: 1em;
+    color: #222;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+.filtro-avaliacoes {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.filtro-avaliacoes label {
+    font-weight: bold;
+}
+.filtro-avaliacoes select {
+    padding: 6px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+
+button[type="submit"]:hover {
+    background: linear-gradient(90deg, #003f7d 60%, #005baa 100%);
+    transform: scale(1.05);
+}
+
+footer {
+    text-align: center;
+    padding: 16px;
+    background: #eee;
+    color: #555;
+    margin-top: 32px;
+    border-top: 1px solid #ddd;
+}
+
+#mensagem {
+    margin-top: 12px;
+    font-weight: bold;
+    color: #005baa;
+
+/* Estilos para a lista de gestores e botão compacto */
+.gestor-card { margin-bottom: 8px; font-size: 1em; }
+.gestor-card .gestor-login { text-decoration: none; font-weight: 600; margin-left: 6px; }
+.btnSolicitarToken.small { padding: 4px 8px; font-size: 0.85em; margin-left: 8px; border-radius: 6px; }
+}
+
+/* Token card (visual para token de reset) */
+.token-card { margin-top:8px; background: linear-gradient(180deg,#f7fbff,#ffffff); border:1px solid #e6f3ff; padding:10px; border-radius:10px; box-shadow: 0 8px 20px rgba(0,91,170,0.06); }
+.token-card .token-label { color:#034a80; font-weight:700; margin-bottom:6px; }
+.token-card .token-value code { display:inline-block; padding:8px 10px; background:#f4f8fb; border-radius:6px; font-weight:700; color:#003a70; }
+.token-card button { padding:6px 10px; border-radius:8px; border:none; cursor:pointer; background:#005baa; color:#fff; }
+.token-card button:active { transform: translateY(1px); }
+
+.btn-admin-login {
+    position: static;
+    margin: 0 8px;
+    background: linear-gradient(90deg, #005baa 60%, #0077cc 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 24px;
+    font-size: 1.05em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    z-index: 10;
+    letter-spacing: 0.5px;
+}
+
+.btn-admin-login:hover {
+    background: linear-gradient(90deg, #003f7d 60%, #005baa 100%);
+    transform: scale(1.05);
+}
+
+.btn-active {
+    box-shadow: 0 4px 12px rgba(0,91,170,0.18);
+    transform: translateY(-2px);
+}
+
+.estagiario-list { display:flex; flex-direction:column; gap:10px; }
+.estagiario-item { background: #fff; padding:12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 6px 14px rgba(0,86,170,0.04); }
+.estagiario-item .meta { font-weight:700; color:#033a6b; }
+.estagiario-item .actions button { background:transparent; border:1px solid #e0eefc; color:#d33; padding:6px 10px; border-radius:8px; cursor:pointer; }
+
+.estagiario-pager { display:flex; gap:6px; margin-top:8px; align-items:center; }
+.pager-btn { background:#0077cc;color:#fff;border:0;padding:6px 8px;border-radius:6px;cursor:pointer }
+.pager-btn.active { background:#034;color:#fff;font-weight:700 }
+.pager-btn:disabled { opacity:0.5; cursor:default }
+
+.comentarios-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+.comentario-card-mini {
+    background: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,90,150,0.08);
+    width: 100%;
+}
+.comentario-card-mini .comentario-top { color:#005baa;font-weight:700;margin-bottom:6px }
+.comentario-card-mini .comentario-body { color:#234; font-size:0.95em }
+
+/* Additional styles for buttons */
+
+/* unified form-back button used across views */
+.btn-back--form {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(90deg, var(--primary-600) 60%, var(--primary-500) 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    box-shadow: 0 4px 14px rgba(3,58,107,0.08);
+    cursor: pointer;
+    transition: transform .14s ease, box-shadow .14s ease, background .12s ease;
+    letter-spacing: 0.4px;
+}
+.btn-back--form:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(3,58,107,0.12); }
+
+/* compact variant when placed inside dashboard header */
+.dashboard-header .btn-back--form, #dashboardGestor .btn-back--form {
+    padding: 8px 12px; border-radius: 14px; font-size: 0.95rem; box-shadow: 0 6px 12px rgba(3,58,107,0.06);
+}
+
+/* Other button styles */
+
+/* specific positional helpers for when a back button must be fixed */
+.btn-back--fixed { position: fixed; left: 24px; top: 24px; z-index: 1000 }
+
+/* helper for absolute placement inside a container */
+.btn-back--absolute { position: absolute; left: 32px; top: 24px; z-index: 10 }
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+    body { font-size: 15px; }
+    header { display:flex; flex-direction:column; align-items:flex-start; gap:8px; padding:14px; }
+    header .logo { width:84px; height:auto }
+    header h1 { font-size:1.4rem }
+    .btn-admin-login { width:100%; box-sizing:border-box; padding:10px 14px; font-size:0.95rem }
+    main { padding:12px }
+    .gestor-grid { flex-direction:column }
+    .dashboard-metrics { flex-direction:column; gap:8px }
+    .metric-card { width:100%; display:flex; justify-content:space-between; padding:10px }
+    .grafico-dom-chart { padding:8px; overflow-x:auto }
+    .grafico-dom-column { min-width:44px; margin-right:8px }
+    .grafico-dom-label { font-size:11px }
+    #graficoDashboardGestorDom { min-height:180px }
+    /* Ajuste para botões de aba no dashboard (evita corte em mobile) */
+    .tab-buttons { flex-wrap: wrap; gap:6px; }
+    .tab-buttons .btn-admin-login { padding:6px 8px !important; height:auto !important; min-width:80px; white-space:nowrap; font-size:0.9rem; }
+    /* forms full width */
+    input[type=text], input[type=number], input[type=password], select, textarea { width:100%; max-width:100%; }
+    .estagiario-list { display:grid; grid-template-columns:repeat(2,1fr); gap:10px }
+    .comentarios-cards { grid-template-columns:repeat(2,1fr) }
+    .comentario-card-mini { min-width:unset }
+    .estagiario-pager, .pager-btn { justify-content:center }
+    /* detalhe canvas responsivo */
+    #graficoDetalheEstagiario { width:100% !important; height:160px !important }
+    .modal-card { width:90%; max-width:420px }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    body { font-size:15.5px }
+    .dashboard-metrics { gap:10px }
+    .estagiario-list { display:grid; grid-template-columns:repeat(3,1fr); gap:12px }
+    .comentarios-cards { grid-template-columns:repeat(3,1fr) }
+    .grafico-dom-column { min-width:56px }
+}
+
+@media (min-width: 1025px) {
+    /* desktop refinements */
+    .estagiario-list { display:flex; flex-direction:column }
+    .comentarios-cards { grid-auto-flow:row }
+}
+
+/* removed id-based styles in favor of the unified .btn-back--form plus positional helpers */
+
+@media (max-width: 700px) {
+    header, main, footer {
+        padding: 8px;
+    }
+    .logo {
+        width: 80px;
+    }
+    h1 {
+        font-size: 1.3em;
+    }
+    main {
+        max-width: 98vw;
+        padding: 8px;
+    }
+    .btn-admin-login, #btnVoltarFormulario {
+        padding: 10px 12px;
+        font-size: 0.95em;
+        top: 50px;
+        left: 12px;
+        right: 12px;
+    }
+    input, textarea {
+        font-size: 0.95em;
+    }
+    section {
+        margin-bottom: 18px;
+    }
+    .estagiario-card, .comentario-card {
+        font-size: 0.95em;
+        padding: 8px;
+    }
+}
+
+/* Mobile refinements for better proportions */
+@media (max-width: 600px) {
+    /* Ensure login cards stack and occupy readable width */
+    .login-cards { display:flex; flex-direction:column; gap:12px; padding:0 6px; align-items:center; }
+    .login-card { width:100%; max-width:520px; margin:0 auto; padding:12px 14px; border-radius:10px; box-shadow:0 6px 16px rgba(3,58,107,0.05); }
+    .login-card h3 { font-size:1rem; margin-bottom:8px }
+    /* Make inputs and buttons friendlier on small screens */
+    input, textarea, select { font-size:0.98rem; padding:10px 12px; }
+    .btn-admin-login { width:100%; padding:12px 14px; border-radius:12px; font-size:1rem; box-sizing:border-box; font-weight:700; }
+    .btn-back, .login-action { padding:8px 12px; font-size:0.95rem; border-radius:12px }
+    /* Reduce header footprint */
+    header { padding:14px 12px }
+    header h1 { font-size:1.25rem }
+    /* Give more room under evaluation form */
+    #avaliacaoSection { margin-bottom: 36px }
+    /* Keep the login menu full width but below header */
+    .login-menu { left:8px; right:8px; top:calc(100% + 10px); }
+
+    /* Fix overlapping buttons inside login cards: ensure flow layout and spacing */
+    .login-card form { margin-bottom: 8px; }
+    .login-card form button, .login-card form input[type="submit"], .login-card form .btn-admin-login {
+        display:block !important;
+        width:100% !important;
+        position:relative !important;
+        margin:0 0 10px 0 !important;
+        z-index:1 !important;
+        box-sizing:border-box;
+        height:44px; /* uniform button height */
+        line-height:44px;
+    }
+    /* Primary / secondary styles inside the card */
+    .login-card form button.primary { background: linear-gradient(90deg,#0066cc 0%, #004a9f 100%); color:#fff; }
+    .login-card .btn-secondary { background: linear-gradient(180deg,#f2f8ff,#e9f4ff); color:#003a70; border:1px solid rgba(3,86,170,0.08); }
+    /* Ensure subsequent standalone buttons have top spacing */
+    #loginEstagiarioSection > div[style] + .login-cards + div {
+        margin-top: 10px;
+    }
+    /* Add extra bottom padding to login-card so big shadows don't visually cover next element */
+    .login-card { padding-bottom: 20px; }
+
+    /* Make main container slightly narrower on very small devices to add breathing room */
+    main { max-width: 94vw; padding: 16px; margin: 18px auto; }
+}
+
+/* Targeted fixes inside the estagiario login section to avoid overflowing pills */
+@media (max-width: 600px) {
+    /* card horizontal padding used in calc (left+right)
+       ensure buttons fit visually inside the card bounds */
+    #loginEstagiarioSection .login-card form button,
+    #loginEstagiarioSection .login-card form .btn-admin-login {
+        width: 100% !important;
+        max-width: 520px !important;
+        margin: 0 auto 12px auto !important;
+        border-radius: 8px !important;
+        box-shadow: none !important;
+        display:block !important;
+        height:44px !important;
+        line-height:44px !important;
+        box-sizing: border-box !important;
+    }
+    /* The standalone forgot-password button under the card should align with the card */
+    #loginEstagiarioSection > div > .btn-admin-login {
+        width: 100% !important;
+        max-width: 520px !important;
+        margin: 10px auto 0 auto !important;
+        display:block !important;
+        box-shadow:none !important;
+        border-radius:8px !important;
+        box-sizing: border-box !important;
+    }
+}
+/* Spinner pequeno ao lado do botão */
+.spinner {
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    border:3px solid #eaf6ff;
+    border-top-color:#005baa;
+    animation: spin 0.8s linear infinite;
+    display:inline-block;
+    vertical-align:middle;
+    margin-left:8px;
+}
+.btn-disabled {
+    opacity:0.6;
+    pointer-events:none;
+}
+.field-error {
+    border-color: #e94e77 !important;
+    box-shadow: 0 0 0 3px #f9d7dc;
+}
+.error-text {
+    color: #e94e77;
+    font-size:0.92em;
+    margin-top:4px;
+}
+.login-cards {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    margin-top: 12px;
+}
+.login-card {
+    flex: 1 1 0;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 8px 22px rgba(3,58,107,0.06);
+    border: 1px solid rgba(0,86,170,0.05);
+}
+.login-card h3 { color: #003a70; margin-bottom: 8px; }
+.gestor-card button[type="submit"] { border-radius: 24px; padding: 12px 0; }
+.admin-card .estagiario-card { margin: 0; box-shadow: none; padding: 8px; }
+
+@media (max-width: 880px) {
+    .login-cards { flex-direction: column; }
+}
+/* ===== Modern theme overrides (begin) ===== */
+:root{
+    --bg:#f3f6fb;
+    --card:#ffffff;
+    --primary:#005baa;
+    --primary-600:#003f7d;
+    --accent:#ff8a00;
+    --muted:#6b7a86;
+    --radius-lg:14px;
+    --radius-md:10px;
+    --glass: rgba(255,255,255,0.6);
+}
+
+/* Global layout tweaks */
+body{ background:var(--bg); color:#0b2033; font-size:16px; font-family: 'Inter', Roboto, Arial, sans-serif; }
+main{ max-width:1100px; margin:28px auto; background:transparent; box-shadow:none; padding:0 20px; }
+
+/* Header modern */
+header{ background:linear-gradient(90deg,var(--primary-600),var(--primary)); color:#fff; padding:28px 20px; border-radius:0 0 28px 28px; box-shadow:0 8px 30px rgba(3,58,107,0.12); display:flex; align-items:center; gap:16px }
+header .logo{ width:84px; margin:0 }
+header h1{ font-size:1.6rem; margin:0; letter-spacing:0.3px }
+header p{ margin:0; opacity:0.95; font-size:0.95rem }
+
+/* Top action bar inside main */
+.top-actions{ display:flex; gap:12px; align-items:center; justify-content:flex-end; margin-bottom:12px }
+.top-actions .btn-admin-login{ border-radius:12px; padding:8px 14px; }
+
+/* Card container used across sections */
+.card{ background:var(--card); border-radius:var(--radius-lg); padding:18px; box-shadow:0 12px 36px rgba(3,58,107,0.08); border:1px solid rgba(0,86,170,0.06); }
+
+/* Forms */
+form label{ font-weight:700; color:#08314a }
+input, textarea, select{ border-radius:10px; border:1px solid #d9e9fb; padding:10px 12px; box-shadow:none }
+button, .btn-admin-login{ transition: transform .15s ease, box-shadow .15s ease, background .12s ease }
+button:hover, .btn-admin-login:hover{ transform: translateY(-3px); box-shadow:0 10px 26px rgba(3,58,107,0.10) }
+
+/* Smaller buttons */
+.small-btn{ padding:6px 10px; border-radius:8px; font-size:0.95rem }
+
+/* login cards refinement */
+.login-cards{ gap:18px }
+.login-card{ padding:18px; border-radius:12px }
+
+/* Ensure login sections do not overlap preceding content (avoid invading the form) */
+#loginEstagiarioSection, #loginSection {
+    margin-top: 56px !important;
+    clear: both !important;
+    position: static !important;
+    z-index: 0 !important; /* keep below fixed UI elements */
+}
+.login-card { position: static !important; z-index: 0 !important; }
+
+/* Ensure the evaluation form has room below when logins are shown */
+#avaliacaoSection { margin-bottom: 48px !important; }
+
+/* Responsive grid for dashboard */
+.dashboard-grid{ display:grid; grid-template-columns: 1fr 380px; gap:20px }
+@media (max-width:980px){ .dashboard-grid{ grid-template-columns:1fr } }
+
+/* Footer */
+footer{ background:transparent; color:var(--muted); padding:18px 20px; text-align:center }
+
+/* Accessibility focus */
+a:focus, button:focus, input:focus{ outline:3px solid rgba(0,91,170,0.18); outline-offset:2px }
+
+/* Small helper */
+.muted{ color:var(--muted) }
+
+/* ===== Modern theme overrides (end) ===== */
+
+/* Admin panel small tweaks */
+@media (min-width: 900px) {
+    #login-section { max-width:900px; margin: 18px auto; }
+}
+#actions-section .estagiario-card { margin-bottom:12px }
+.msg { color: var(--primary); font-weight:600 }
+
+/* Utility layout helpers */
+.container{ max-width:1100px; margin:0 auto; padding:0 16px }
+.row{ display:flex; gap:16px; flex-wrap:wrap }
+.col{ flex:1 }
+
+/* Button variants */
+.btn { display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:10px; border:none; cursor:pointer; font-weight:700 }
+.btn-primary{ background: linear-gradient(90deg,var(--primary) 10%, var(--primary-600)); color:#fff }
+.btn-ghost{ background:transparent; border:1px solid rgba(3,58,107,0.08); color:var(--primary) }
+
+/* Form: larger inputs on desktop */
+@media (min-width: 900px) { input, textarea, select { padding:12px 14px; font-size:1rem } }
+
+/* Card elevation tiers */
+.elev-sm{ box-shadow:0 6px 18px rgba(3,58,107,0.05) }
+.elev-md{ box-shadow:0 12px 36px rgba(3,58,107,0.08) }
+
+/* Improve contrast for labels and small text */
+label, .muted, .department-note { color: #22313a }
+
+/* subtle card hover for interactive areas */
+.card:hover { transform: translateY(-6px); transition: transform .18s ease }
+
+/* Make tables and lists cleaner */
+table{ width:100%; border-collapse:collapse }
+th, td{ padding:8px 10px; text-align:left; border-bottom:1px solid #f0f4f8 }
+
+/* Ensure footer doesn't clash with new theme */
+footer p{ margin:0; color:var(--muted) }
+
+/* Accessibility: larger focus ring for keyboard navigation */
+button:focus, a:focus { box-shadow:0 0 0 4px rgba(0,91,170,0.12) }
