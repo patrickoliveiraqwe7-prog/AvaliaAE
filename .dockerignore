@@ -1,0 +1,7 @@
+node_modules
+npm-debug.log
+.env
+avaliacoes.db
+test
+.vscode
+.DS_Store

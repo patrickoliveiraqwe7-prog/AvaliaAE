@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Painel Admin - Redefinições</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  </head>
+<body>
+  <header>
+  <img src="assets/rede-bahia-logo.svg" alt="Logo" class="logo" width="140" height="40">
+    <div style="flex:1">
+      <h1 style="margin:0;">Painel do Administrador</h1>
+      <p style="margin:6px 0 0;color:#fff;opacity:0.9;">Gerencie redefinições de senha (somente administradores)</p>
+    </div>
+  </header>
+
+  <main>
+    <section id="login-section" class="card dashboard-card">
+      <h2>Login do Admin</h2>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;">
+        <label style="flex:1;min-width:160px">Usuário<br><input id="admin-login" type="text" placeholder="admin"></label>
+        <label style="flex:1;min-width:160px">Senha<br><input id="admin-senha" type="password" placeholder="senha"></label>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button id="btnLoginAdmin" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-user-shield"></i></span> Entrar</button>
+          <button id="btnLogoutAdmin" type="button" class="login-action" disabled><span class="ico"><i class="fa-solid fa-right-from-bracket"></i></span> Sair</button>
+        </div>
+      </div>
+      <div id="admin-msg" class="msg" style="margin-top:12px"></div>
+    </section>
+
+    <section id="actions-section" class="card" style="display:none;margin-top:18px;">
+      <h2>Ações de Redefinição</h2>
+
+      <div class="estagiario-card">
+        <h3>Solicitar token (gestor)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="gestor-login" type="text" placeholder="login" style="flex:1;min-width:180px" />
+            <button id="btnRequestGestor" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-key"></i></span> Solicitar token</button>
+            <button id="btnRegenGestor" type="button" class="login-action" title="Regenerar token"><span class="ico"><i class="fa-solid fa-sync"></i></span></button>
+            <button id="btnRevokeGestor" type="button" class="login-action" title="Revogar token"><span class="ico"><i class="fa-solid fa-ban"></i></span></button>
+        </div>
+        <div id="gestor-request-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <div class="estagiario-card">
+        <h3>Confirmar token (gestor)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="gestor-login-confirm" type="text" placeholder="login" style="flex:1;min-width:140px" />
+          <input id="gestor-token-confirm" type="text" placeholder="token" style="flex:1;min-width:200px" />
+          <input id="gestor-nova-senha" type="password" placeholder="nova senha" style="flex:1;min-width:140px" />
+          <button id="btnConfirmGestor" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-check"></i></span> Confirmar</button>
+        </div>
+        <div id="gestor-confirm-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <div class="estagiario-card">
+        <h3>Redefinir direto (gestor)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="gestor-login-direct" type="text" placeholder="login" style="flex:1;min-width:180px" />
+          <input id="gestor-nova-senha-direct" type="password" placeholder="nova senha" style="flex:1;min-width:180px" />
+          <button id="btnRedefinirGestorDirect" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-rotate-left"></i></span> Redefinir</button>
+        </div>
+        <div id="gestor-direct-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <div style="height:10px"></div>
+
+      <div class="estagiario-card">
+        <h3>Solicitar token (estagiário)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="estagiario-login" type="text" placeholder="login" style="flex:1;min-width:180px" />
+            <button id="btnRequestEstagiario" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-key"></i></span> Solicitar token</button>
+            <button id="btnRegenEstagiario" type="button" class="login-action" title="Regenerar token"><span class="ico"><i class="fa-solid fa-sync"></i></span></button>
+            <button id="btnRevokeEstagiario" type="button" class="login-action" title="Revogar token"><span class="ico"><i class="fa-solid fa-ban"></i></span></button>
+        </div>
+        <div id="estagiario-request-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <div class="estagiario-card">
+        <h3>Confirmar token (estagiário)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="estagiario-login-confirm" type="text" placeholder="login" style="flex:1;min-width:120px" />
+          <input id="estagiario-token-confirm" type="text" placeholder="token" style="flex:1;min-width:160px" />
+          <input id="estagiario-nova-senha" type="password" placeholder="nova senha" style="flex:1;min-width:140px" />
+          <button id="btnConfirmEstagiario" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-check"></i></span> Confirmar</button>
+        </div>
+        <div id="estagiario-confirm-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <div class="estagiario-card">
+        <h3>Redefinir direto (estagiário)</h3>
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <input id="estagiario-login-direct" type="text" placeholder="login" style="flex:1;min-width:180px" />
+          <input id="estagiario-nova-senha-direct" type="password" placeholder="nova senha" style="flex:1;min-width:180px" />
+          <button id="btnRedefinirEstagiarioDirect" type="button" class="login-action"><span class="ico"><i class="fa-solid fa-rotate-left"></i></span> Redefinir</button>
+        </div>
+        <div id="estagiario-direct-result" class="msg" style="margin-top:8px"></div>
+      </div>
+
+      <p style="margin-top:14px"><a href="index.html">Voltar para o site</a></p>
+    </section>
+  </main>
+  <script src="admin.js"></script>
+</body>
+</html>

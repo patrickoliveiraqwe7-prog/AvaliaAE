@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rede Bahia - Avaliação de Estagiários</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+    <img src="assets/rede-bahia-logo.svg" alt="Logo Rede Bahia" class="logo" width="140" height="40">
+        <h1 style="font-family: 'Roboto', Arial, sans-serif;">AvaliaAÊ <i class="fa-solid fa-star"></i></h1>
+        <p>Estagiários</p>
+        <div class="login-menu-wrapper" style="display:inline-block;position:relative;">
+            <button id="btnLoginMenu" class="login-action" aria-haspopup="true" aria-expanded="false"><span class="ico"><i class="fa-solid fa-sign-in-alt"></i></span> Login</button>
+            <div id="loginMenu" class="login-menu" role="menu" aria-label="Menu de login" style="display:none;">
+                <button type="button" class="login-menu-item" id="menu-gestor" role="menuitem">Gestores</button>
+                <button type="button" class="login-menu-item" id="menu-estagiario" role="menuitem">Estagiários</button>
+                <button type="button" class="login-menu-item" id="menu-administrador" role="menuitem">Administrador</button>
+            </div>
+        </div>
+    <button type="button" id="btnAdminLogin" class="login-action" style="display:none;"><span class="ico"><i class="fa-solid fa-user-tie"></i></span> Gestores</button>
+    <button type="button" id="btnEstagiarioLogin" class="login-action" style="display:none;"><span class="ico"><i class="fa-solid fa-user-graduate"></i></span> Área do Estagiário</button>
+    <button type="button" id="btnLogout" class="btn-admin-login" style="display:none;"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+    <!-- Botão rápido para o painel de administração -->
+    <button id="btnOpenAdminPanel" class="login-action" type="button" title="Painel do Administrador"><span class="ico"><i class="fa-solid fa-shield-halved"></i></span> Painel Admin</button>
+    <button id="btnMicrosoftLogin" class="login-action" type="button" title="Entrar com Microsoft" style="background:#2F2F91;color:#fff;margin-left:8px;border-radius:20px;padding:8px 12px;"><span class="ico"><i class="fa-brands fa-microsoft"></i></span> Entrar com Microsoft</button>
+
+    </header>
+    <main>
+        <div class="page-card">
+            <div class="page-card-top" style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
+                <!-- toolbar intentionally left empty to avoid top-of-page back buttons -->
+            </div>
+        <section class="sobre">
+            <h2>Sobre o AvaliaAÊ <i class="fa-solid fa-circle-info"></i></h2>
+            <p>Nossa plataforma foi criada para facilitar a avaliação de estagiários, oferecendo aos gestores uma visão clara do que está sendo feito e como está sendo feito. Ela ajuda os estagiários a identificar pontos de melhoria e a potencializar seus esforços para um desenvolvimento profissional mais eficiente.</p>
+            <div class="instrucoes-uso" style="background:#eaf6ff;padding:12px;border-radius:8px;margin-top:12px;">
+                <h3><i class="fa-solid fa-book"></i> Instruções de Uso</h3>
+                <ul>
+                    <li><b>Gestores:</b> Clique em <i class="fa-solid fa-user-tie"></i> Gestores para acessar avaliações e cadastrar estagiários.</li>
+                    <li><b>Estagiários:</b> Clique em <i class="fa-solid fa-user-graduate"></i> Área do Estagiário para visualizar suas notas e feedbacks.</li>
+                    <li>Após enviar uma avaliação, aguarde a mensagem de confirmação.</li>
+                    <li>Use o botão <i class="fa-solid fa-right-from-bracket"></i> Sair para fazer logout.</li>
+                </ul>
+            </div>
+        </section>
+        <section class="avaliacao" id="avaliacaoSection">
+            <h2>Avaliação de Estagiários <i class="fa-solid fa-clipboard-check"></i></h2>
+            <form id="formAvaliacao">
+                <label for="nome">Nome do Estagiário:</label>
+                <input type="text" id="nome" name="nome" required list="tagsNome" aria-label="Nome do Estagiário" aria-required="true">
+                <datalist id="tagsNome"></datalist>
+                <label for="area">Área:</label>
+                <input type="text" id="area" name="area" required list="tagsArea" aria-label="Área" aria-required="true">
+                <datalist id="tagsArea"></datalist>
+                <label for="departamento">Departamento:</label>
+                <select id="departamento" name="departamento" required aria-label="Departamento">
+                    <option value="">Selecione...</option>
+                    <option value="dados">Dados</option>
+                    <option value="corporativo">Corporativo</option>
+                    <option value="conteudo">Conteúdo</option>
+                    <option value="jornalismo">Jornalismo</option>
+                    <option value="radio">Rádio</option>
+                    <option value="administracao">Administração</option>
+                    <option value="financeiro">Financeiro</option>
+                    <option value="dho">DHO</option>
+                    <option value="estoque">Estoque</option>
+                </select>
+                <label for="nota">Nota (0 a 10):</label>
+                <input type="number" id="nota" name="nota" min="0" max="10" required aria-label="Nota">
+                <label for="comentario">Comentário:</label>
+                <textarea id="comentario" name="comentario" rows="3" aria-label="Comentário"></textarea>
+                <div class="form-actions">
+                    <button type="submit" id="btnEnviarAvaliacao" aria-live="polite">Enviar Avaliação</button>
+                    <div id="spinnerEnviar" class="spinner" aria-hidden="true" style="display:none;" title="Enviando"></div>
+                </div>
+                <div id="mensagem" role="status" aria-live="polite"></div>
+            </form>
+            
+        </section>
+        <section class="login" id="loginEstagiarioSection" style="display:none;">
+            <!-- principal back button moved to toolbar -->
+            <button type="button" id="btnVoltarPrincipalEstagiario" class="btn-back btn-back--form small" style="margin-bottom:8px;"><span class="ico"><i class="fa-solid fa-house"></i></span> Voltar para a página principal</button>
+            <h2>Login <i class="fa-solid fa-user-graduate"></i></h2>
+            <div class="login-cards">
+                <div class="login-card estagiario-card">
+                    <h3 style="margin-top:0;">Login dos Estagiários</h3>
+                    <form id="formLoginEstagiario" autocomplete="off">
+                        <label for="usuarioEstagiario">Usuário:</label>
+                        <input type="text" id="usuarioEstagiario" name="usuarioEstagiario" required autocomplete="off" aria-label="Usuário">
+                        <label for="senhaEstagiario">Senha:</label>
+                        <input type="password" id="senhaEstagiario" name="senhaEstagiario" required autocomplete="off" aria-label="Senha">
+                        <button type="submit" class="btn-admin-login primary">Entrar</button>
+                    </form>
+                </div>
+            </div>
+            <div style="margin-top:12px;">
+                <button id="btnEsqueciSenha" class="btn-admin-login btn-secondary">Esqueci minha senha</button>
+            </div>
+            <hr>
+            <div id="passwordResetRequest" style="display:none;margin-top:12px;">
+                <h3>Solicitar reset de senha</h3>
+                <label for="resetLogin">Login:</label>
+                <input type="text" id="resetLogin" name="resetLogin" aria-label="Login para reset">
+                <button type="button" id="btnEnviarReset">Solicitar token</button>
+                <div id="resetRequestMensagem"></div>
+            </div>
+            <div id="passwordResetConfirm" style="display:none;margin-top:12px;">
+                <h3>Confirmar reset de senha</h3>
+                <label for="resetToken">Token:</label>
+                <input type="text" id="resetToken" name="resetToken">
+                <label for="resetNovaSenha">Nova senha:</label>
+                <input type="password" id="resetNovaSenha" name="resetNovaSenha">
+                <button type="button" id="btnConfirmarReset">Confirmar</button>
+                <div id="resetConfirmMensagem"></div>
+            </div>
+            <div id="mensagemLoginEstagiario"></div>
+        </section>
+        <section class="info-estagiario" id="infoEstagiarioSection" style="display:none;">
+            <h2>Informações do Estagiário <i class="fa-solid fa-user-graduate"></i></h2>
+            <button type="button" id="btnVoltarEstagiario" class="btn-back btn-back--form"><span class="ico"><i class="fa-solid fa-arrow-left"></i></span> Voltar</button>
+            <!-- Sobre e instruções removidos das outras páginas -->
+            <div id="infoEstagiario">
+                <p>Bem-vindo! Aqui você pode visualizar informações importantes sobre seu estágio.</p>
+                <ul>
+                    <li>Seu nome e área cadastrados</li>
+                    <li>Notas recebidas</li>
+                    <li>Comentários dos avaliadores</li>
+                </ul>
+            </div>
+        </section>
+        <section class="login" id="loginSection" style="display:none; position:relative;">
+            <div style="display:flex;gap:8px;align-items:center;">
+                <!-- inline back button for this section -->
+                <button type="button" id="btnVoltarPrincipal" class="btn-back btn-back--form small"><span class="ico"><i class="fa-solid fa-house"></i></span> Voltar para a página principal</button>
+            </div>
+            <h2 style="margin-top:48px;">Login <i class="fa-solid fa-user-tie"></i></h2>
+            <!-- cartões de login: Gestor | Administrador -->
+            <div class="login-cards">
+                <div class="login-card gestor-card">
+                    <h3 style="margin-top:0;">Login dos Gestores</h3>
+                    <form id="formLogin" autocomplete="off">
+                        <label for="usuario">Usuário:</label>
+                        <input type="text" id="usuario" name="usuario" required autocomplete="off" aria-label="Usuário">
+                        <label for="senha">Senha:</label>
+                        <input type="password" id="senha" name="senha" required autocomplete="off" aria-label="Senha">
+                        <button type="submit">Entrar</button>
+                    </form>
+                </div>
+                <div class="login-card admin-card">
+                    <h3 style="margin-top:0;">Login de Administrador <small style="font-weight:400;display:block;color:#234;">(requerido para resets)</small></h3>
+                    <div class="estagiario-card" style="margin-top:6px;padding:12px;">
+                        <form id="formLoginAdminInline" onsubmit="return false;" style="display:flex;flex-direction:column;gap:8px;">
+                            <label for="adminLogin">Usuário:</label>
+                            <input type="text" id="adminLogin" name="adminLogin" placeholder="admin" />
+                            <label for="adminSenha">Senha:</label>
+                            <input type="password" id="adminSenha" name="adminSenha" placeholder="senha" />
+                            <button type="button" id="btnLoginAdmin" class="btn-admin-login" style="width:100%;padding:12px 0;border-radius:24px;font-weight:700;">Entrar como Admin</button>
+                        </form>
+                        <div id="adminLoginMsg" style="margin-top:8px;color:#005baa;font-weight:700;"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top:12px;">
+                <button id="btnEsqueciSenhaGestor" class="btn-admin-login">Esqueci minha senha (Gestor)</button>
+            </div>
+            <div id="gestorPasswordResetRequest" style="display:none;margin-top:12px;">
+                <h3>Solicitar reset de senha (Gestor)</h3>
+                <label for="resetLoginGestor">Login:</label>
+                <input type="text" id="resetLoginGestor" name="resetLoginGestor" aria-label="Login gestor">
+                <button type="button" id="btnEnviarResetGestor">Solicitar token</button>
+                <div id="resetRequestMensagemGestor"></div>
+            </div>
+            <div id="gestorPasswordResetConfirm" style="display:none;margin-top:12px;">
+                <h3>Confirmar reset de senha (Gestor)</h3>
+                <label for="resetTokenGestor">Token:</label>
+                <input type="text" id="resetTokenGestor" name="resetTokenGestor">
+                <label for="resetNovaSenhaGestor">Nova senha:</label>
+                <input type="password" id="resetNovaSenhaGestor" name="resetNovaSenhaGestor">
+                <button type="button" id="btnConfirmarResetGestor">Confirmar</button>
+                <div id="resetConfirmMensagemGestor"></div>
+            </div>
+            <div id="mensagemLogin"></div>
+        </section>
+        <section class="comentarios" id="comentariosSection" style="display:none; position:relative;">
+            <h2 style="margin-top:48px;">Comentários e Notas dos Estagiários <i class="fa-solid fa-comments"></i></h2>
+            <!-- Sobre e instruções removidos das outras páginas -->
+            <div class="gestor-grid" style="display:flex;gap:32px;align-items:flex-start;">
+                <div class="gestor-avaliacoes" style="flex:1;min-width:280px;">
+                    <div class="filtro-avaliacoes">
+                        <!-- Filtros superiores removidos conforme solicitado -->
+                    </div>
+                    <div id="listaComentarios">
+                        <p>Carregando avaliações...</p>
+                    </div>
+                </div>
+                <!-- cadastro moved into dashboard tabs -->
+            </div>
+            <!-- button moved into dashboard header for better layout -->
+            <div id="dashboardGestor" style="margin-bottom:32px;padding:24px;background:#eaf6ff;border-radius:16px;box-shadow:0 2px 8px #005baa22;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px;">
+                    <div style="display:flex;align-items:center;gap:12px;">
+                        <button type="button" id="btnVoltarAvaliacao" class="btn-back btn-back--form"><span class="ico"><i class="fa-solid fa-arrow-left"></i></span> Voltar para avaliações</button>
+                        <h3 style="color:#005baa;margin:0;"><i class="fa-solid fa-chart-bar"></i> Dashboard de Avaliações</h3>
+                    </div>
+                    <div class="tab-buttons" style="display:flex;gap:8px;align-items:center;">
+                        <button type="button" id="tabVisao" class="btn-admin-login" style="height:34px;padding:8px 12px;">Visão Geral</button>
+                        <button type="button" id="tabCadastro" class="btn-admin-login" style="height:34px;padding:8px 12px;">Cadastro</button>
+                        <button type="button" id="tabEstagiarios" class="btn-admin-login" style="height:34px;padding:8px 12px;">Estagiários</button>
+                        <button id="tabGestores" class="btn-admin-login" style="height:34px;padding:8px 12px;">Gestores</button>
+                    </div>
+                </div>
+                <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-end;">
+                    <div>
+                        <label for="filtroDashDepartamento"><b>Departamento:</b></label>
+                        <select id="filtroDashDepartamento">
+                            <option value="">Todos</option>
+                            <option value="dados">Dados</option>
+                            <option value="corporativo">Corporativo</option>
+                            <option value="conteudo">Conteúdo</option>
+                            <option value="jornalismo">Jornalismo</option>
+                            <option value="radio">Rádio</option>
+                            <option value="administracao">Administração</option>
+                            <option value="financeiro">Financeiro</option>
+                            <option value="dho">DHO</option>
+                            <option value="estoque">Estoque</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="filtroDashEstagiario"><b>Estagiário:</b></label>
+                        <input type="text" id="filtroDashEstagiario" placeholder="Nome..." style="max-width:120px;">
+                    </div>
+                    <!-- Ordenação removida: ordena sempre por média (maior → menor) -->
+                    <div>
+                        <button id="btnLimparFiltro" class="btn-admin-login" style="height:38px;align-self:flex-end;">Limpar filtro</button>
+                    </div>
+                </div>
+                <div id="dashboardContent">
+                <div class="dashboard-metrics" style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px;">
+                    <div class="metric-card" id="mMedia">Média: <span class="metric-value">-</span></div>
+                    <div class="metric-card" id="mMax">Maior: <span class="metric-value">-</span></div>
+                    <div class="metric-card" id="mMin">Menor: <span class="metric-value">-</span></div>
+                    <div class="metric-card" id="mTendencia">Tendência: <span class="metric-value">-</span></div>
+                </div>
+                <div id="graficoDashboardGestorDom" class="grafico-dom-chart" style="background:#fff;border-radius:12px;box-shadow:0 1px 6px #005baa22;margin-top:18px;min-height:240px;padding:12px;"></div>
+                <div id="infoDashboardGestor" style="margin-top:16px;color:#005baa;font-weight:bold;"></div>
+                </div>
+                <div id="cadastroContent" style="display:none;margin-top:12px;">
+                    <section id="cadastroEstagiarioSection">
+                        <h2>Cadastrar Novo Estagiário <i class="fa-solid fa-user-plus"></i></h2>
+                        <form id="formCadastroEstagiario" autocomplete="off">
+                            <label for="nomeNovo">Nome:</label>
+                            <input type="text" id="nomeNovo" name="nomeNovo" required aria-label="Nome">
+                            <label for="areaNovo">Área:</label>
+                            <input type="text" id="areaNovo" name="areaNovo" aria-label="Área">
+                            <label for="departamentoNovo">Departamento:</label>
+                            <select id="departamentoNovo" name="departamentoNovo" aria-label="Departamento">
+                                <option value="">Selecione...</option>
+                                <option value="dados">Dados</option>
+                                <option value="corporativo">Corporativo</option>
+                                <option value="conteudo">Conteúdo</option>
+                                <option value="jornalismo">Jornalismo</option>
+                                <option value="radio">Rádio</option>
+                                <option value="administracao">Administração</option>
+                                <option value="financeiro">Financeiro</option>
+                                <option value="dho">DHO</option>
+                                <option value="estoque">Estoque</option>
+                            </select>
+                            <label for="loginNovo">Login:</label>
+                            <input type="text" id="loginNovo" name="loginNovo" required autocomplete="off" aria-label="Login">
+                            <label for="senhaNovo">Senha:</label>
+                            <input type="password" id="senhaNovo" name="senhaNovo" required autocomplete="off" aria-label="Senha">
+                            <button type="submit">Cadastrar Estagiário</button>
+                        </form>
+                        <div id="mensagemCadastroEstagiario"></div>
+                        <hr>
+                        <h2>Estagiários Cadastrados <i class="fa-solid fa-users"></i></h2>
+                        <div id="listaEstagiarios"></div>
+                    </section>
+                    <section id="cadastroGestorSection" style="margin-top:18px;">
+                        <h2>Cadastrar Gestor <i class="fa-solid fa-user-shield"></i></h2>
+                        <form id="formCadastroGestor" autocomplete="off">
+                            <label for="nomeGestor">Nome:</label>
+                            <input type="text" id="nomeGestor" name="nomeGestor" required aria-label="Nome do Gestor">
+                            <label for="loginGestor">Login:</label>
+                            <input type="text" id="loginGestor" name="loginGestor" required aria-label="Login do Gestor">
+                            <label for="senhaGestor">Senha:</label>
+                            <input type="password" id="senhaGestor" name="senhaGestor" required aria-label="Senha do Gestor">
+                            <button type="submit">Cadastrar Gestor</button>
+                        </form>
+                        <div id="mensagemCadastroGestor"></div>
+                        <hr>
+                        <h3>Gestores Cadastrados</h3>
+                        <div id="listaGestores">Carregando gestores...</div>
+                        <h3 style="margin-top:12px;">Administradores Cadastrados</h3>
+                        <div id="listaAdmins">Carregando administradores...</div>
+                    </section>
+                </div>
+                <div id="estagiariosContent" style="display:none;margin-top:12px;">
+                    <h3 style="color:#005baa;margin-top:0;">Gerenciar Estagiários</h3>
+                    <div id="gerenciarEstagiariosList">Carregando estagiários...</div>
+                </div>
+                <!-- Painel de detalhe por estagiário (inicialmente oculto) -->
+                <div id="painelDetalheEstagiario" style="display:none;margin-top:18px;">
+                    <h4 style="color:#003a70;margin-bottom:8px;">Detalhes do Estagiário <i class="fa-solid fa-user"></i></h4>
+                    <div style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;">
+                        <canvas id="graficoDetalheEstagiario" class="grafico-canvas" style="background:#fff;border-radius:12px;box-shadow:0 1px 6px #005baa22;width:320px;height:160px;"></canvas>
+                        <div id="detalheEstagiario" style="flex:1;min-width:200px;color:#034;">
+                            <p id="detalheNome" style="font-weight:700;color:#005baa;margin:0 0 6px 0;"></p>
+                            <p id="detalheMedia" style="margin:0 0 6px 0;"></p>
+                            <p id="detalheUltimas" style="margin:0 0 6px 0;"></p>
+                            <p id="detalheComentarios" style="margin:0;color:#334;font-size:0.95em;"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                <!-- Removido comentários e notas dos estagiários. Dashboard interativo substitui a visualização. -->
+        </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Rede Bahia - feito por Patrick Oliveira</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // cache-bust para garantir que o navegador carregue o script atualizado
+        var _v = Date.now();
+        document.write('<script src="script.js?v=' + _v + '"><\/script>');
+    </script>
+</body>
+</html>

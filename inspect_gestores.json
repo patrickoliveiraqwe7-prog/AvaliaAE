@@ -1,0 +1,33 @@
+{
+  "gestores": [
+    {
+      "id": 3,
+      "nome": "Gestor Ethereal",
+      "login": "gestor_ethereal"
+    },
+    {
+      "id": 2,
+      "nome": "Gestor Auto",
+      "login": "gestor_auto"
+    },
+    {
+      "id": 1,
+      "nome": "Gestor Teste",
+      "login": "gestor_teste"
+    }
+  ],
+  "gestor_password_resets": [
+    {
+      "id": 3,
+      "gestor_id": 3,
+      "token": "43617edc2828af792c753a1eee13e7cd51f7793f95b2f06a",
+      "expires_at": 1759525159831
+    },
+    {
+      "id": 1,
+      "gestor_id": 1,
+      "token": "29ea3bcc7e956f35000174738a0632ad72debecc45ce1af1",
+      "expires_at": 1759520609236
+    }
+  ]
+}
